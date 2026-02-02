@@ -6,6 +6,7 @@
     --text: #ffffff;
     --text-dark: #2c2c2c;
     --border: rgba(255, 255, 255, 0.2);
+    --gradient-bg: linear-gradient(135deg, rgba(162, 192, 235, 0.95) 0%, rgba(188, 210, 244, 0.95) 100%);
 }
 
 * {
@@ -18,7 +19,6 @@ body {
     font-family: 'Poppins', sans-serif;
     background: linear-gradient(135deg, #0a1929 0%, #1e3c72 30%, #2a5298 70%, #1e3c72 100%);
     min-height: 100vh;
-    position: relative;
     overflow-x: hidden;
 }
 
@@ -118,27 +118,27 @@ body {
     box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
 }
 
-/* Main Content */
+/* Main Content & Container */
 .main-content {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 2rem;
-    min-height: auto;
-    padding-bottom: 3rem;
+    padding: 2rem 2rem 3rem;
 }
 
-/* Container */
-.container {
-    background: linear-gradient(135deg, rgba(162, 192, 235, 0.95) 0%, rgba(188, 210, 244, 0.95) 100%);
+.container, .result, .graph-section, .competitor-section {
+    background: var(--gradient-bg);
     border-radius: 20px;
     padding: 2.5rem;
-    max-width: 520px;
-    width: 100%;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.3);
+    width: 100%;
+}
+
+.container {
+    max-width: 520px;
 }
 
 /* Header Section */
@@ -193,7 +193,48 @@ body {
     margin-bottom: 0.5rem;
 }
 
-/* Custom Select Styles */
+/* Input & Select Base Styles */
+.input-group input,
+.input-group select {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border: none;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.95);
+    font-size: 1rem;
+    color: var(--text-dark);
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.input-group input:focus,
+.input-group select:focus {
+    outline: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+.input-group select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%232c2c2c' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+select option {
+    padding: 10px 15px;
+    background: white;
+    color: var(--text-dark);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* Custom Select Dropdown */
 .custom-select-wrapper {
     position: relative;
     width: 100%;
@@ -289,7 +330,6 @@ body {
     font-family: 'Poppins', sans-serif;
     color: var(--text-dark);
     background: transparent;
-    padding: 0;
 }
 
 .currency-search input::placeholder {
@@ -363,144 +403,65 @@ body {
     color: #6b6b6b;
 }
 
-.input-group input,
-.input-group select {
-    width: 100%;
-    padding: 0.85rem 1rem;
-    border: none;
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.95);
-    font-size: 1rem;
-    color: var(--text-dark);
-    font-family: 'Poppins', sans-serif;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.input-group input:focus,
-.input-group select:focus {
-    outline: none;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    transform: translateY(-2px);
-}
-
-.input-group select {
-    cursor: pointer;
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%232c2c2c' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 1rem center;
-    padding-right: 2.5rem;
-    font-size: 0.95rem;
-    font-weight: 500;
-}
-
-/* Enhanced select option styling */
-select option {
-    padding: 10px 15px;
-    background: white;
-    color: var(--text-dark);
-    font-size: 0.95rem;
-    line-height: 1.6;
-}
-
-/* Swap Button */
+/* Swap & Convert Buttons */
 .swap-container {
     text-align: center;
     margin: 1rem 0;
 }
 
 .swap-btn {
-    background: rgba(255, 255, 255, 0.95);
-    color: var(--primary);
-    border: none;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
-    width: 45px;
-    height: 45px;
+    border: none;
+    background: var(--text);
+    color: var(--primary);
     cursor: pointer;
-    font-size: 1.2rem;
     transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .swap-btn:hover {
-    transform: rotate(180deg);
-    background: var(--text);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+    transform: rotate(180deg) scale(1.1);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
 }
 
-.swap-btn svg {
-    width: 20px;
-    height: 20px;
-}
-
-/* Convert Button */
 .convert-btn {
     width: 100%;
     padding: 1rem;
-    background: linear-gradient(135deg, #0052cc 0%, #0041a3 100%);
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
     color: var(--text);
     border: none;
     border-radius: 12px;
-    font-size: 1.1rem;
-    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
     text-transform: uppercase;
     letter-spacing: 1px;
-    margin-top: 0.5rem;
-    box-shadow: 0 4px 12px rgba(0, 82, 204, 0.3);
+    margin-top: 1rem;
+    box-shadow: 0 4px 16px rgba(30, 60, 114, 0.3);
 }
 
 .convert-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(0, 82, 204, 0.4);
-    background: linear-gradient(135deg, #0041a3 0%, #003380 100%);
-}
-
-.convert-btn:active {
-    transform: translateY(0);
-}
-
-/* Result Container - Wrapper outside main container */
-.result-container {
-    max-width: 520px;
-    width: 100%;
-    margin: 0 auto;
-    padding: 0 1rem;
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: all 0.3s ease;
-    visibility: hidden;
-    margin-top: 1.5rem;
-}
-
-.result-container.show {
-    opacity: 1;
-    transform: translateY(0);
-    visibility: visible;
+    box-shadow: 0 6px 20px rgba(30, 60, 114, 0.4);
 }
 
 /* Result Section */
 .result {
-    background: linear-gradient(135deg, rgba(162, 192, 235, 0.95) 0%, rgba(188, 210, 244, 0.95) 100%);
-    border-radius: 20px;
+    max-width: 520px;
+    margin: 2rem auto;
     padding: 2rem;
     text-align: center;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    max-width: 520px;
-    width: 100%;
-    margin: 2rem auto;
     opacity: 0;
     transform: translateY(10px);
     transition: all 0.3s ease;
     position: relative;
-    z-index: 0;
 }
 
 .result.show {
@@ -508,7 +469,6 @@ select option {
     transform: translateY(0);
 }
 
-/* Reset Button */
 .reset-btn {
     position: absolute;
     top: 1rem;
@@ -564,33 +524,19 @@ select option {
 
 /* Graph Section */
 .graph-section {
-    background: linear-gradient(135deg, rgba(162, 192, 235, 0.95) 0%, rgba(188, 210, 244, 0.95) 100%) !important;
-    border-radius: 20px !important;
-    padding: 2.5rem !important;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.3) !important;
     max-width: 900px;
     width: 90%;
     margin: 2rem auto !important;
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
 }
 
-.graph-section.show {
-    opacity: 1 !important;
-    transform: translateY(0);
-}
-
-.graph-title {
+.graph-title, .competitor-title {
     font-size: 1.4rem;
     font-weight: 700;
     color: var(--text-dark) !important;
-    margin-bottom: 1.5rem;
     text-align: center;
     text-transform: uppercase;
     letter-spacing: 1px;
+    margin-bottom: 1.5rem;
 }
 
 .graph-canvas-container {
@@ -602,35 +548,11 @@ select option {
     padding: 1rem;
 }
 
-/* Competitor Section Styles */
+/* Competitor Section */
 .competitor-section {
-    background: linear-gradient(135deg, rgba(162, 192, 235, 0.95) 0%, rgba(188, 210, 244, 0.95) 100%) !important;
-    border-radius: 20px !important;
-    padding: 2.5rem !important;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.3) !important;
     max-width: 1100px;
     width: 90%;
     margin: 2rem auto !important;
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-}
-
-.competitor-section.show {
-    opacity: 1 !important;
-    transform: translateY(0);
-}
-
-.competitor-title {
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: var(--text-dark) !important;
-    text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 0.5rem;
 }
 
 .competitor-subtitle {
@@ -640,7 +562,7 @@ select option {
     margin-bottom: 2rem;
 }
 
-/* Comparison Table Styles */
+/* Comparison Table */
 .comparison-table-wrapper {
     overflow-x: auto;
     border-radius: 12px;
@@ -774,7 +696,6 @@ select option {
 }
 
 .highlight-row .our-value {
-    color: #0052cc;
     font-size: 1.15rem;
 }
 
@@ -791,8 +712,7 @@ select option {
     background: white !important;
 }
 
-.loading-cell,
-.error-cell {
+.loading-cell, .error-cell {
     text-align: center;
     padding: 2rem;
     color: #6b6b6b;
@@ -808,7 +728,6 @@ select option {
 /* Responsive Design */
 @media (max-width: 768px) {
     .comparison-table-wrapper {
-        overflow-x: auto;
         -webkit-overflow-scrolling: touch;
     }
 
@@ -857,23 +776,16 @@ select option {
         justify-content: space-between;
     }
     
-    .result {
+    .result, .graph-section, .competitor-section {
         width: 95%;
         padding: 1.5rem;
-    }
-    
-    .graph-section,
-    .competitor-section {
-        padding: 1.5rem;
-        width: 95%;
     }
     
     .graph-canvas-container {
         height: 300px;
     }
     
-    .graph-title,
-    .competitor-title {
+    .graph-title, .competitor-title {
         font-size: 1.1rem;
     }
 
