@@ -2,6 +2,10 @@
 const API_KEY = "ef5910f5f4ea3dda753f47df";
 const API_URL = `https://v6.exchangerate-api.com/v6/${API_KEY}/latest/`;
 
+// Gold API Configuration
+const GOLD_API_KEY = "goldapi-109yk2v19ml0v7geu-io";
+const GOLD_API_URL = "https://www.goldapi.io/api";
+
 // Currency Data
 const currencies = [
   { code: "USD", name: "US Dollar", flag: "us" },
@@ -29,13 +33,7 @@ const currencies = [
 ];
 
 // Custom Dropdown Functionality
-function initCustomSelect(
-  triggerId,
-  dropdownId,
-  listId,
-  searchId,
-  hiddenInputId,
-) {
+function initCustomSelect(triggerId, dropdownId, listId, searchId, hiddenInputId) {
   const trigger = document.getElementById(triggerId);
   const list = document.getElementById(listId);
   const search = document.getElementById(searchId);
@@ -64,22 +62,15 @@ function initCustomSelect(
                     `;
         item.onclick = () => {
           hiddenInput.value = currency.code;
-          trigger.querySelector(".flag-icon").src =
-            `https://flagcdn.com/w40/${currency.flag}.png`;
+          trigger.querySelector(".flag-icon").src = `https://flagcdn.com/w40/${currency.flag}.png`;
           trigger.querySelector(".currency-code").textContent = currency.code;
           trigger.querySelector(".currency-name").textContent = currency.name;
           wrapper.classList.remove("active");
           search.value = "";
           populateList();
           if (hiddenInputId === "fromCurrency") {
-            updateHistoricalChart(
-              currency.code,
-              document.getElementById("toCurrency").value,
-            );
-            updateCompetitorRates(
-              currency.code,
-              document.getElementById("toCurrency").value,
-            );
+            updateHistoricalChart(currency.code, document.getElementById("toCurrency").value);
+            updateCompetitorRates(currency.code, document.getElementById("toCurrency").value);
           }
         };
         list.appendChild(item);
@@ -101,13 +92,7 @@ function initCustomSelect(
   populateList();
 }
 
-initCustomSelect(
-  "fromTrigger",
-  "fromDropdown",
-  "fromList",
-  "fromSearch",
-  "fromCurrency",
-);
+initCustomSelect("fromTrigger", "fromDropdown", "fromList", "fromSearch", "fromCurrency");
 initCustomSelect("toTrigger", "toDropdown", "toList", "toSearch", "toCurrency");
 
 // Logout Handler
@@ -136,10 +121,7 @@ let ratesChart = null;
 async function updateHistoricalChart(fromCurrency, toCurrency) {
   try {
     document.getElementById("graphSection").classList.add("show");
-    const historicalData = await generateHistoricalData(
-      fromCurrency,
-      toCurrency,
-    );
+    const historicalData = await generateHistoricalData(fromCurrency, toCurrency);
 
     if (ratesChart) ratesChart.destroy();
 
@@ -229,9 +211,7 @@ async function generateHistoricalData(fromCurrency, toCurrency) {
     for (let i = 29; i >= 0; i--) {
       const date = new Date(today);
       date.setDate(date.getDate() - i);
-      dates.push(
-        date.toLocaleDateString("en-US", { month: "short", day: "numeric" }),
-      );
+      dates.push(date.toLocaleDateString("en-US", { month: "short", day: "numeric" }));
       const variation = (Math.random() - 0.5) * 0.04;
       rates.push(parseFloat((currentRate * (1 + variation)).toFixed(6)));
     }
@@ -248,41 +228,16 @@ async function updateCompetitorRates(fromCurrency, toCurrency) {
   const tableBody = document.getElementById("comparisonTableBody");
   try {
     document.getElementById("competitorSection").classList.add("show");
-    tableBody.innerHTML =
-      '<tr><td colspan="5" class="loading-cell">Loading comparison...</td></tr>';
+    tableBody.innerHTML = '<tr><td colspan="5" class="loading-cell">Loading comparison...</td></tr>';
 
     const ourRate = await getExchangeRate(fromCurrency, toCurrency);
     const amount = 1000;
 
     const competitors = [
-      {
-        name: "CurrencyX",
-        rate: ourRate,
-        feePercent: 0,
-        feeFixed: 0,
-        isOurs: true,
-      },
-      {
-        name: "Wise",
-        rate: ourRate * 0.995,
-        feePercent: 0.004,
-        feeFixed: 0,
-        isOurs: false,
-      },
-      {
-        name: "XE",
-        rate: ourRate * 0.985,
-        feePercent: 0,
-        feeFixed: 0,
-        isOurs: false,
-      },
-      {
-        name: "PayPal",
-        rate: ourRate * 0.965,
-        feePercent: 0.005,
-        feeFixed: 0,
-        isOurs: false,
-      },
+      { name: "CurrencyX", rate: ourRate,           feePercent: 0,     feeFixed: 0, isOurs: true  },
+      { name: "Wise",      rate: ourRate * 0.995,   feePercent: 0.004, feeFixed: 0, isOurs: false },
+      { name: "XE",        rate: ourRate * 0.985,   feePercent: 0,     feeFixed: 0, isOurs: false },
+      { name: "PayPal",    rate: ourRate * 0.965,   feePercent: 0.005, feeFixed: 0, isOurs: false },
     ];
 
     const calculations = competitors.map((comp) => ({
@@ -314,10 +269,7 @@ async function updateCompetitorRates(fromCurrency, toCurrency) {
         label: "Exchange rate markup",
         sublabel: "",
         values: calculations.map((c) => ({
-          value:
-            c.markup > 0.01
-              ? `${c.markup.toFixed(2)} ${fromCurrency}`
-              : `0 ${fromCurrency}`,
+          value: c.markup > 0.01 ? `${c.markup.toFixed(2)} ${fromCurrency}` : `0 ${fromCurrency}`,
           isHighlight: false,
         })),
       },
@@ -325,10 +277,7 @@ async function updateCompetitorRates(fromCurrency, toCurrency) {
         label: "Transfer fee",
         sublabel: "",
         values: calculations.map((c) => ({
-          value:
-            c.fee > 0
-              ? `${c.fee.toFixed(2)} ${fromCurrency}`
-              : `0 ${fromCurrency}`,
+          value: c.fee > 0 ? `${c.fee.toFixed(2)} ${fromCurrency}` : `0 ${fromCurrency}`,
           isHighlight: false,
         })),
       },
@@ -350,7 +299,7 @@ async function updateCompetitorRates(fromCurrency, toCurrency) {
                         <td class="row-label">
                             <div class="label-text">${row.label}</div>
                             ${row.sublabel ? `<div class="label-subtext">${row.sublabel}</div>` : ""}
-                         </td>
+                        </td>
                         ${row.values
                           .map(
                             (val, i) => `
@@ -371,10 +320,109 @@ async function updateCompetitorRates(fromCurrency, toCurrency) {
                 `;
   } catch (error) {
     console.error("Error updating competitor rates:", error);
-    tableBody.innerHTML =
-      '<tr><td colspan="5" class="error-cell">Unable to load rate comparison</td></tr>';
+    tableBody.innerHTML = '<tr><td colspan="5" class="error-cell">Unable to load rate comparison</td></tr>';
   }
 }
+
+// Gold Price Functions
+let goldPricesCache = null;
+let goldLastUpdate = null;
+
+async function fetchGoldPrices() {
+  try {
+    const response = await fetch(`${GOLD_API_URL}/XAU/USD`, {
+      method: "GET",
+      headers: {
+        "x-access-token": GOLD_API_KEY,
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) throw new Error("Gold API request failed");
+
+    const data = await response.json();
+    goldPricesCache = data;
+    goldLastUpdate = new Date();
+    return data;
+  } catch (error) {
+    console.error("Error fetching gold prices:", error);
+    throw error;
+  }
+}
+
+async function updateGoldTable() {
+  const tableBody = document.getElementById("goldTableBody");
+  const updateTimeEl = document.getElementById("goldUpdateTime");
+  const goldAmount = parseFloat(document.getElementById("goldAmount").value) || 1;
+  const goldUnit = document.getElementById("goldUnit").value;
+
+  try {
+    tableBody.innerHTML = '<tr><td colspan="3" class="loading-cell">Loading gold prices...</td></tr>';
+
+    const goldData = await fetchGoldPrices();
+
+    // Convert weight to troy ounces
+    let weightInOz = goldAmount;
+    if (goldUnit === "gram") {
+      weightInOz = goldAmount / 31.1035;
+    } else if (goldUnit === "kg") {
+      weightInOz = goldAmount * 32.1507;
+    }
+
+    // Get exchange rates for multiple currencies
+    const targetCurrencies = ["USD", "EUR", "GBP", "JPY", "AUD", "CAD", "CHF", "CNY"];
+    const pricePerOzUSD = goldData.price_gram_24k * 31.1035;
+
+    const rows = await Promise.all(
+      targetCurrencies.map(async (currency) => {
+        try {
+          let priceInCurrency, yourAmount;
+
+          if (currency === "USD") {
+            priceInCurrency = pricePerOzUSD;
+            yourAmount = pricePerOzUSD * weightInOz;
+          } else {
+            const rate = await getExchangeRate("USD", currency);
+            priceInCurrency = pricePerOzUSD * rate;
+            yourAmount = priceInCurrency * weightInOz;
+          }
+
+          const currencyInfo = currencies.find((c) => c.code === currency);
+          const flagImg = currencyInfo
+            ? `<img src="https://flagcdn.com/w40/${currencyInfo.flag}.png" class="flag-icon-small" alt="${currency}">`
+            : "";
+
+          return `
+                            <tr>
+                                <td class="currency-cell">${flagImg} <strong>${currency}</strong></td>
+                                <td class="price-cell">${priceInCurrency.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                                <td class="amount-cell"><strong>${yourAmount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong></td>
+                            </tr>
+                        `;
+        } catch (err) {
+          return `
+                            <tr>
+                                <td>${currency}</td>
+                                <td colspan="2" class="error-cell">Error loading</td>
+                            </tr>
+                        `;
+        }
+      }),
+    );
+
+    tableBody.innerHTML = rows.join("");
+    updateTimeEl.textContent = `Last updated: ${goldLastUpdate.toLocaleTimeString()}`;
+  } catch (error) {
+    console.error("Error updating gold table:", error);
+    tableBody.innerHTML = '<tr><td colspan="3" class="error-cell">Unable to load gold prices. Please try again.</td></tr>';
+    updateTimeEl.textContent = "Update failed";
+  }
+}
+
+// Gold event listeners
+document.getElementById("refreshGoldBtn").addEventListener("click", updateGoldTable);
+document.getElementById("goldAmount").addEventListener("input", updateGoldTable);
+document.getElementById("goldUnit").addEventListener("change", updateGoldTable);
 
 // Form Handlers
 const form = document.getElementById("converterForm");
@@ -389,6 +437,7 @@ const amountInput = document.getElementById("amount");
 window.addEventListener("load", () => {
   updateHistoricalChart(fromCurrencyInput.value, toCurrencyInput.value);
   updateCompetitorRates(fromCurrencyInput.value, toCurrencyInput.value);
+  updateGoldTable();
 });
 
 swapBtn.addEventListener("click", () => {
@@ -398,24 +447,14 @@ swapBtn.addEventListener("click", () => {
 
   if (tempCurrency && toCurrency) {
     fromCurrencyInput.value = toCurrency.code;
-    document.getElementById("fromTrigger").querySelector(".flag-icon").src =
-      `https://flagcdn.com/w40/${toCurrency.flag}.png`;
-    document
-      .getElementById("fromTrigger")
-      .querySelector(".currency-code").textContent = toCurrency.code;
-    document
-      .getElementById("fromTrigger")
-      .querySelector(".currency-name").textContent = toCurrency.name;
+    document.getElementById("fromTrigger").querySelector(".flag-icon").src = `https://flagcdn.com/w40/${toCurrency.flag}.png`;
+    document.getElementById("fromTrigger").querySelector(".currency-code").textContent = toCurrency.code;
+    document.getElementById("fromTrigger").querySelector(".currency-name").textContent = toCurrency.name;
 
     toCurrencyInput.value = tempCurrency.code;
-    document.getElementById("toTrigger").querySelector(".flag-icon").src =
-      `https://flagcdn.com/w40/${tempCurrency.flag}.png`;
-    document
-      .getElementById("toTrigger")
-      .querySelector(".currency-code").textContent = tempCurrency.code;
-    document
-      .getElementById("toTrigger")
-      .querySelector(".currency-name").textContent = tempCurrency.name;
+    document.getElementById("toTrigger").querySelector(".flag-icon").src = `https://flagcdn.com/w40/${tempCurrency.flag}.png`;
+    document.getElementById("toTrigger").querySelector(".currency-code").textContent = tempCurrency.code;
+    document.getElementById("toTrigger").querySelector(".currency-name").textContent = tempCurrency.name;
 
     updateHistoricalChart(toCurrency.code, tempCurrency.code);
     updateCompetitorRates(toCurrency.code, tempCurrency.code);
@@ -450,8 +489,7 @@ form.addEventListener("submit", async (e) => {
   } catch (error) {
     console.error("Conversion error:", error);
     resultValue.textContent = "Error";
-    resultDetails.textContent =
-      "Unable to convert. Please check your internet connection.";
+    resultDetails.textContent = "Unable to convert. Please check your internet connection.";
     result.classList.add("show");
   }
 });
