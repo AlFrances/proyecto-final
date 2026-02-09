@@ -169,10 +169,11 @@ include 'connect.php';
                         <div class="currency-list" id="toList"></div>
                     </div>
                     <input type="hidden" id="toCurrency" name="toCurrency" value="EUR">
+
+                    <button type="submit" class="convert-btn">Convert</button>
                 </div>
             </div>
-
-            <button type="submit" class="convert-btn">Convert</button>
+            </div>
         </form>
     </div>
 

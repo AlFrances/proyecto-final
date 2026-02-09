@@ -347,7 +347,7 @@ select option {
   z-index: 10;
 }
 .custom-select-wrapper.active {
-  z-index: 9999;
+  z-index: 1000;
 }
 
 .custom-select-trigger {
@@ -403,7 +403,7 @@ select option {
   background: white;
   border-radius: 12px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-  z-index: 10000;
+  z-index: 1001;
   display: none;
   overflow: hidden;
 }
@@ -615,7 +615,7 @@ select option {
 
 /* Graph */
 .graph-section {
-  max-width: 1200px;
+  max-width: 900px;
   width: 90%;
   margin: 2rem auto !important;
 }
@@ -642,7 +642,7 @@ select option {
 
 /* Competitor */
 .competitor-section {
-  max-width: 1200px;
+  max-width: 1100px;
   width: 90%;
   margin: 2rem auto !important;
 }
@@ -985,7 +985,7 @@ select:focus-visible {
     max-width: 600px;
   }
   .graph-section {
-    max-width: 1200px;
+    max-width: 1000px;
   }
   .competitor-section {
     max-width: 1200px;
@@ -996,13 +996,6 @@ select:focus-visible {
   .converter-result-grid {
     max-width: 95%;
     gap: 1.5rem;
-  }
-}
-
-@media (max-width: 900px) {
-  .converter-result-grid {
-    gap: 1.25rem;
-    max-width: 95%;
   }
 }
 
@@ -1049,7 +1042,6 @@ select:focus-visible {
     padding: 0.5rem 1rem;
     font-size: 0.85rem;
   }
-
   .container {
     padding: 1.75rem;
   }
@@ -1110,19 +1102,9 @@ select:focus-visible {
   .graph-canvas-container {
     height: 250px;
   }
-  /* Stack on landscape phones */
-  .converter-result-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
 }
 
 @media (max-width: 600px) {
-  /* Stack converter and result on mobile phones */
-  .converter-result-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
   .site-header {
     padding: 1rem;
     flex-direction: column;
@@ -1148,6 +1130,10 @@ select:focus-visible {
   }
   .main-content {
     padding: 1rem;
+  }
+  .converter-result-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
   }
   .currency-row {
     flex-direction: column;
