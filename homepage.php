@@ -25,6 +25,10 @@ include 'connect.php';
             <div class="brand-logo">₵</div>
             <div class="brand-name">CurrencyX</div>
         </div>
+        <nav class="header-nav">
+            <a href="homepage.php" class="nav-link active">Home</a>
+            <a href="gold-rates.php" class="nav-link">Gold Rates</a>
+        </nav>
         <div class="user-section">
             <div class="user-info">
                 <div class="user-avatar" id="userAvatar">
@@ -83,8 +87,8 @@ include 'connect.php';
     <!-- Main Content -->
     <div class="main-content">
     
-    <!-- Two Column Layout -->
-    <div class="converter-grid">
+    <!-- Converter and Result Grid -->
+    <div class="converter-result-grid">
         
     <!-- Main Currency Converter -->
     <div class="container">
@@ -173,64 +177,6 @@ include 'connect.php';
         </form>
     </div>
 
-    <!-- Gold Price Table -->
-    <div class="gold-container">
-        <div class="header">
-            <h1>Gold Prices</h1>
-            <p>Live gold rates in multiple currencies</p>
-            <div class="accent-line"></div>
-        </div>
-
-        <div class="gold-selector">
-            <label for="goldAmount">Gold Weight</label>
-            <div class="gold-input-group">
-                <input 
-                    type="number" 
-                    id="goldAmount" 
-                    name="goldAmount" 
-                    placeholder="Enter weight" 
-                    value="1"
-                    step="0.01"
-                    min="0.01"
-                >
-                <select id="goldUnit" name="goldUnit">
-                    <option value="oz">Troy Ounce</option>
-                    <option value="gram">Gram</option>
-                    <option value="kg">Kilogram</option>
-                </select>
-            </div>
-            <button type="button" class="refresh-gold-btn" id="refreshGoldBtn" title="Refresh gold prices">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
-                </svg>
-                Refresh
-            </button>
-        </div>
-
-        <div class="gold-table-wrapper">
-            <table class="gold-table" id="goldTable">
-                <thead>
-                    <tr>
-                        <th>Currency</th>
-                        <th>Price per Oz</th>
-                        <th>Your Amount</th>
-                    </tr>
-                </thead>
-                <tbody id="goldTableBody">
-                    <tr>
-                        <td colspan="3" class="loading-cell">Loading gold prices...</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="gold-info">
-            <small id="goldUpdateTime">Last updated: Loading...</small>
-        </div>
-    </div>
-
-    </div> <!-- End converter-grid -->
-
     <!-- Result Section -->
     <div class="result" id="result">
         <button class="reset-btn" id="resetBtn" title="Close result">
@@ -242,6 +188,8 @@ include 'connect.php';
         <div class="result-value" id="resultValue">0.00</div>
         <div class="result-details" id="resultDetails">Awaiting conversion...</div>
     </div>
+
+    </div> <!-- End converter-result-grid -->
 
     <!-- Historical Rate Chart Section -->
     <div class="graph-section" id="graphSection">
