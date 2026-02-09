@@ -26,3 +26,6 @@ cache/
 *.sql
 *.sqlite
 *.db
+
+# Nested repositories
+proyecto-final/
