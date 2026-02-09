@@ -960,6 +960,596 @@ select option {
   font-size: 0.85rem;
 }
 
+/* Markets Page */
+.markets-container {
+  max-width: 1400px;
+  margin: 0 auto 2rem auto;
+  background: linear-gradient(135deg, #1a1d29 0%, #252834 100%);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.markets-container .header h1 {
+  color: #ffffff;
+  font-size: 1.75rem;
+  letter-spacing: 1.5px;
+}
+
+.markets-container .header p {
+  color: #8b92a8;
+  font-size: 0.85rem;
+}
+
+.markets-container .accent-line {
+  background: #4fc3f7;
+  height: 2px;
+  width: 80px;
+}
+
+.market-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.stat-card {
+  background: rgba(30, 35, 45, 0.95);
+  border-radius: 6px;
+  padding: 0.85rem 1rem;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.2s ease;
+}
+
+.stat-card:hover {
+  background: rgba(35, 40, 50, 0.95);
+  border-color: rgba(0, 122, 255, 0.3);
+}
+
+.stat-label {
+  font-size: 0.7rem;
+  color: #8b92a8;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 0.35rem;
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  font-family: "Courier New", monospace;
+}
+
+.stat-green {
+  color: #00e676;
+}
+
+.stat-red {
+  color: #ff5252;
+}
+
+.stat-time {
+  font-size: 1.1rem;
+  color: #4fc3f7;
+}
+
+.markets-table-wrapper {
+  overflow-x: auto;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  background: #1e232d;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 1rem;
+}
+
+.table-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background: rgba(30, 35, 45, 0.95);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.refresh-btn {
+  padding: 0.5rem 1rem;
+  background: rgba(0, 122, 255, 0.15);
+  color: #4fc3f7;
+  border: 1px solid rgba(79, 195, 247, 0.3);
+  border-radius: 4px;
+  font-family: "Poppins", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.refresh-btn:hover {
+  background: rgba(0, 122, 255, 0.25);
+  border-color: #4fc3f7;
+}
+
+.refresh-btn svg {
+  transition: transform 0.5s ease;
+}
+
+.refresh-btn:hover svg {
+  transform: rotate(180deg);
+}
+
+.auto-refresh {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  color: #8b92a8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.auto-refresh input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: #4fc3f7;
+}
+
+.auto-refresh label {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.markets-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #1e232d;
+  font-size: 0.85rem;
+}
+
+.markets-table thead {
+  background: rgba(30, 35, 45, 0.95);
+  border-bottom: 2px solid rgba(79, 195, 247, 0.2);
+}
+
+.markets-table th {
+  padding: 0.65rem 0.75rem;
+  text-align: left;
+  font-weight: 700;
+  color: #8b92a8;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  white-space: nowrap;
+}
+
+.markets-table tbody tr {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: background 0.15s ease;
+}
+
+.markets-table tbody tr:hover {
+  background: rgba(79, 195, 247, 0.05);
+}
+
+.markets-table tbody tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.markets-table tbody tr:nth-child(even):hover {
+  background: rgba(79, 195, 247, 0.05);
+}
+
+.markets-table td {
+  padding: 0.5rem 0.75rem;
+  color: #ffffff;
+  vertical-align: middle;
+}
+
+.pair-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.pair-flags {
+  display: flex;
+  gap: 2px;
+}
+
+.flag-icon-mini {
+  width: 18px;
+  height: 13px;
+  object-fit: cover;
+  border-radius: 2px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  opacity: 0.9;
+}
+
+.rate-cell {
+  font-family: "Courier New", monospace;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #ffffff;
+  letter-spacing: 0.3px;
+}
+
+.change-cell,
+.percent-cell {
+  font-family: "Courier New", monospace;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.3px;
+}
+
+.change-cell.up,
+.percent-cell.up {
+  color: #00e676;
+}
+
+.change-cell.down,
+.percent-cell.down {
+  color: #ff5252;
+}
+
+.change-cell.neutral,
+.percent-cell.neutral {
+  color: #8b92a8;
+}
+
+.trend-cell {
+  text-align: center;
+}
+
+.trend-indicator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 4px;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.trend-indicator.up {
+  background: rgba(0, 230, 118, 0.15);
+  color: #00e676;
+  border: 1px solid rgba(0, 230, 118, 0.3);
+}
+
+.trend-indicator.down {
+  background: rgba(255, 82, 82, 0.15);
+  color: #ff5252;
+  border: 1px solid rgba(255, 82, 82, 0.3);
+}
+
+.trend-indicator.neutral {
+  background: rgba(139, 146, 168, 0.1);
+  color: #8b92a8;
+  border: 1px solid rgba(139, 146, 168, 0.2);
+}
+
+.markets-info {
+  text-align: center;
+  padding: 0.75rem 1rem;
+  background: rgba(30, 35, 45, 0.5);
+  border-radius: 6px;
+  margin-top: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.markets-info small {
+  color: #8b92a8;
+  font-size: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.markets-info svg {
+  flex-shrink: 0;
+  color: #4fc3f7;
+}
+
+.analytics-info {
+  text-align: center;
+  padding: 0.75rem 1rem;
+  background: rgba(30, 35, 45, 0.5);
+  border-radius: 8px;
+  margin-top: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.analytics-info small {
+  color: #8b92a8;
+  font-size: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+}
+
+.analytics-info svg {
+  flex-shrink: 0;
+  color: #4fc3f7;
+}
+
+/* Advanced Analytics Components */
+.analytics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.analytics-card {
+  background: rgba(30, 35, 45, 0.95);
+  border-radius: 8px;
+  padding: 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.calendar-card {
+  grid-column: span 2;
+}
+
+.card-header {
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(79, 195, 247, 0.2);
+}
+
+.card-header h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 0.25rem;
+}
+
+.card-header small {
+  font-size: 0.7rem;
+  color: #8b92a8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.loading-text {
+  text-align: center;
+  padding: 2rem;
+  color: #8b92a8;
+  font-size: 0.85rem;
+}
+
+/* Currency Strength Meter */
+.strength-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  gap: 0.75rem;
+}
+
+.strength-label {
+  font-family: "Courier New", monospace;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #ffffff;
+  min-width: 40px;
+}
+
+.strength-bar-wrapper {
+  flex: 1;
+  height: 24px;
+  background: rgba(139, 146, 168, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.strength-bar {
+  height: 100%;
+  transition: width 0.5s ease;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 0.5rem;
+}
+
+.strength-bar.strong {
+  background: linear-gradient(90deg, rgba(0, 230, 118, 0.2) 0%, rgba(0, 230, 118, 0.6) 100%);
+}
+
+.strength-bar.weak {
+  background: linear-gradient(90deg, rgba(255, 82, 82, 0.2) 0%, rgba(255, 82, 82, 0.6) 100%);
+}
+
+.strength-value {
+  font-family: "Courier New", monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+/* Market Volatility Heatmap */
+.heatmap-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 0.5rem;
+}
+
+.heatmap-cell {
+  background: rgba(139, 146, 168, 0.1);
+  border-radius: 6px;
+  padding: 0.75rem;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: transform 0.2s ease;
+}
+
+.heatmap-cell:hover {
+  transform: scale(1.05);
+}
+
+.heatmap-cell.positive {
+  background: linear-gradient(135deg, rgba(0, 230, 118, 0.2) 0%, rgba(0, 230, 118, 0.4) 100%);
+  border-color: rgba(0, 230, 118, 0.3);
+}
+
+.heatmap-cell.negative {
+  background: linear-gradient(135deg, rgba(255, 82, 82, 0.2) 0%, rgba(255, 82, 82, 0.4) 100%);
+  border-color: rgba(255, 82, 82, 0.3);
+}
+
+.heatmap-pair {
+  font-family: "Courier New", monospace;
+  font-weight: 700;
+  font-size: 0.75rem;
+  color: #ffffff;
+  margin-bottom: 0.35rem;
+}
+
+.heatmap-change {
+  font-family: "Courier New", monospace;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.heatmap-change.positive {
+  color: #00e676;
+}
+
+.heatmap-change.negative {
+  color: #ff5252;
+}
+
+/* Economic Calendar */
+.calendar-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  max-height: 350px;
+  overflow-y: auto;
+}
+
+.calendar-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.calendar-list::-webkit-scrollbar-track {
+  background: rgba(139, 146, 168, 0.1);
+  border-radius: 3px;
+}
+
+.calendar-list::-webkit-scrollbar-thumb {
+  background: rgba(79, 195, 247, 0.3);
+  border-radius: 3px;
+}
+
+.calendar-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(79, 195, 247, 0.5);
+}
+
+.calendar-event {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: rgba(139, 146, 168, 0.05);
+  border-radius: 6px;
+  border-left: 3px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.calendar-event:hover {
+  background: rgba(79, 195, 247, 0.05);
+  border-left-color: #4fc3f7;
+}
+
+.calendar-event.high-impact {
+  border-left-color: #ff5252;
+}
+
+.calendar-event.medium-impact {
+  border-left-color: #ffa726;
+}
+
+.calendar-event.low-impact {
+  border-left-color: #66bb6a;
+}
+
+.event-time {
+  font-family: "Courier New", monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #4fc3f7;
+  min-width: 60px;
+}
+
+.event-details {
+  flex: 1;
+}
+
+.event-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 0.2rem;
+}
+
+.event-country {
+  font-size: 0.7rem;
+  color: #8b92a8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.impact-badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.impact-badge.high {
+  background: rgba(255, 82, 82, 0.2);
+  color: #ff5252;
+  border: 1px solid rgba(255, 82, 82, 0.3);
+}
+
+.impact-badge.medium {
+  background: rgba(255, 167, 38, 0.2);
+  color: #ffa726;
+  border: 1px solid rgba(255, 167, 38, 0.3);
+}
+
+.impact-badge.low {
+  background: rgba(102, 187, 106, 0.2);
+  color: #66bb6a;
+  border: 1px solid rgba(102, 187, 106, 0.3);
+}
+
 /* Accessibility */
 button:focus-visible,
 input:focus-visible,
@@ -1090,6 +1680,44 @@ select:focus-visible {
   .gold-table td {
     padding: 0.75rem;
   }
+  .markets-container {
+    padding: 1.5rem;
+  }
+  .market-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+  .stat-card {
+    padding: 0.65rem 0.75rem;
+  }
+  .stat-value {
+    font-size: 1.3rem;
+  }
+  .markets-table {
+    font-size: 0.75rem;
+  }
+  .markets-table th,
+  .markets-table td {
+    padding: 0.5rem 0.4rem;
+  }
+  .table-controls {
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: stretch;
+  }
+  .refresh-btn {
+    width: 100%;
+    justify-content: center;
+  }
+  .analytics-grid {
+    grid-template-columns: 1fr;
+  }
+  .calendar-card {
+    grid-column: span 1;
+  }
+  .heatmap-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (max-width: 667px) and (orientation: landscape) {
@@ -1211,6 +1839,110 @@ select:focus-visible {
   .flag-icon-small {
     width: 20px;
     height: 14px;
+  }
+  .markets-container {
+    padding: 1rem;
+    border-radius: 8px;
+  }
+  .markets-container .header h1 {
+    font-size: 1.4rem;
+  }
+  .market-stats {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+  .stat-card {
+    padding: 0.6rem;
+  }
+  .stat-label {
+    font-size: 0.65rem;
+  }
+  .stat-value {
+    font-size: 1.2rem;
+  }
+  .markets-table-wrapper {
+    -webkit-overflow-scrolling: touch;
+  }
+  .markets-table {
+    min-width: 650px;
+    font-size: 0.75rem;
+  }
+  .markets-table th {
+    padding: 0.5rem 0.3rem;
+    font-size: 0.65rem;
+  }
+  .markets-table td {
+    padding: 0.45rem 0.3rem;
+  }
+  .pair-cell {
+    gap: 0.4rem;
+    font-size: 0.75rem;
+  }
+  .flag-icon-mini {
+    width: 16px;
+    height: 11px;
+  }
+  .rate-cell {
+    font-size: 0.85rem;
+  }
+  .change-cell,
+  .percent-cell {
+    font-size: 0.8rem;
+  }
+  .trend-indicator {
+    width: 24px;
+    height: 24px;
+    font-size: 0.9rem;
+  }
+  .analytics-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  .calendar-card {
+    grid-column: span 1;
+  }
+  .analytics-card {
+    padding: 1rem;
+  }
+  .card-header h3 {
+    font-size: 0.85rem;
+  }
+  .heatmap-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.4rem;
+  }
+  .heatmap-cell {
+    padding: 0.5rem;
+  }
+  .heatmap-pair {
+    font-size: 0.7rem;
+  }
+  .heatmap-change {
+    font-size: 0.85rem;
+  }
+  .strength-item {
+    margin-bottom: 0.5rem;
+  }
+  .strength-label {
+    font-size: 0.75rem;
+  }
+  .strength-bar-wrapper {
+    height: 20px;
+  }
+  .calendar-event {
+    padding: 0.6rem;
+    gap: 0.5rem;
+  }
+  .event-time {
+    font-size: 0.7rem;
+    min-width: 50px;
+  }
+  .event-title {
+    font-size: 0.8rem;
+  }
+  .impact-badge {
+    font-size: 0.6rem;
+    padding: 0.2rem 0.4rem;
   }
 }
 

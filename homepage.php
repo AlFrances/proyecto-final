@@ -28,6 +28,7 @@ include 'connect.php';
         <nav class="header-nav">
             <a href="homepage.php" class="nav-link active">Home</a>
             <a href="gold-rates.php" class="nav-link">Gold Rates</a>
+            <a href="markets.php" class="nav-link">Markets</a>
         </nav>
         <div class="user-section">
             <div class="user-info">
