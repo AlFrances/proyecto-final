@@ -13,7 +13,7 @@ include 'connect.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Currency Converter</title>
+    <title>CurConv - Currency Converter</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="homepage.css">
@@ -24,7 +24,7 @@ include 'connect.php';
     <header class="site-header">
         <div class="brand">
             <div class="brand-logo">₵</div>
-            <div class="brand-name">CurrencyX</div>
+            <div class="brand-name">CurConv</div>
         </div>
         <nav class="header-nav">
             <a href="homepage.php" class="nav-link active">Home</a>
@@ -86,7 +86,8 @@ include 'connect.php';
         </div>
     </header>
 
-    <!-- Main Content -->
+    <!-- Page Layout: Main Content + Notification Sidebar -->
+    <div class="page-layout">
     <div class="main-content">
     
     <!-- Converter and Result Grid -->
@@ -213,7 +214,7 @@ include 'connect.php';
                         <th class="provider-col our-provider">
                             <div class="provider-header">
                                 <div class="provider-logo">₵</div>
-                                <div class="provider-name">CurrencyX</div>
+                                <div class="provider-name">CurConv</div>
                             </div>
                         </th>
                         <th class="provider-col">
@@ -246,6 +247,36 @@ include 'connect.php';
     </div>
 
     </div> <!-- Close main-content -->
+
+    <!-- Notification Sidebar -->
+    <aside class="notification-sidebar" id="notificationSidebar">
+      <div class="sidebar-header">
+        <h3 class="sidebar-title">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+            <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+          </svg>
+          Market Alerts
+        </h3>
+        <span class="sidebar-badge" id="alertCount">0</span>
+      </div>
+      <div class="sidebar-feed" id="notificationFeed">
+        <div class="notification-loading">Loading alerts...</div>
+      </div>
+      <div class="sidebar-footer">
+        <a href="markets.php" class="view-markets-link">
+          View Full Markets
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+    </aside>
+
+    </div> <!-- Close page-layout -->
+
+    <!-- Mobile Sidebar Toggle -->
+    <button class="sidebar-toggle-btn" id="sidebarToggleBtn" title="Market Alerts">&#128276;</button>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="homepage.js"></script>

@@ -256,7 +256,7 @@ async function updateCompetitorRates(fromCurrency, toCurrency) {
 
     const competitors = [
       {
-        name: "CurrencyX",
+        name: "CurConv",
         rate: ourRate,
         feePercent: 0,
         feeFixed: 0,
@@ -458,4 +458,169 @@ form.addEventListener("submit", async (e) => {
 
 document.getElementById("resetBtn").addEventListener("click", () => {
   result.classList.remove("show");
+});
+
+// ===== NOTIFICATION SIDEBAR =====
+
+const NOTIFICATION_PAIRS = [
+  { base: "EUR", quote: "USD", name: "EUR/USD" },
+  { base: "GBP", quote: "USD", name: "GBP/USD" },
+  { base: "USD", quote: "JPY", name: "USD/JPY" },
+  { base: "AUD", quote: "USD", name: "AUD/USD" },
+  { base: "USD", quote: "CAD", name: "USD/CAD" },
+  { base: "USD", quote: "CHF", name: "USD/CHF" },
+  { base: "NZD", quote: "USD", name: "NZD/USD" },
+  { base: "EUR", quote: "GBP", name: "EUR/GBP" },
+  { base: "EUR", quote: "JPY", name: "EUR/JPY" },
+  { base: "GBP", quote: "JPY", name: "GBP/JPY" },
+];
+
+const NOTIFICATION_CACHE_KEY = "homepage_notification_rates";
+
+async function fetchNotificationData() {
+  try {
+    // Single API call to get all USD-based rates
+    const response = await fetch(API_URL + "USD");
+    const data = await response.json();
+
+    if (data.result !== "success") throw new Error("API request failed");
+
+    const usdRates = data.conversion_rates;
+
+    // Derive all pair rates from single USD response
+    const currentRates = {};
+    NOTIFICATION_PAIRS.forEach((pair) => {
+      if (pair.base === "USD") {
+        currentRates[pair.name] = usdRates[pair.quote];
+      } else if (pair.quote === "USD") {
+        currentRates[pair.name] = 1 / usdRates[pair.base];
+      } else {
+        currentRates[pair.name] = usdRates[pair.quote] / usdRates[pair.base];
+      }
+    });
+
+    // Load previous rates from localStorage
+    let previousRates = {};
+    const stored = localStorage.getItem(NOTIFICATION_CACHE_KEY);
+    if (stored) {
+      try {
+        previousRates = JSON.parse(stored);
+      } catch (e) {
+        previousRates = {};
+      }
+    }
+
+    // Build notification items
+    const notifications = NOTIFICATION_PAIRS.map((pair) => {
+      const current = currentRates[pair.name];
+      const previous = previousRates[pair.name];
+      let changePercent = 0;
+
+      if (previous && previous > 0) {
+        changePercent = ((current - previous) / previous) * 100;
+      }
+
+      return {
+        name: pair.name,
+        rate: current,
+        changePercent: changePercent,
+        direction: changePercent > 0.001 ? "up" : changePercent < -0.001 ? "down" : "neutral",
+      };
+    });
+
+    // Sort by biggest movers first
+    notifications.sort((a, b) => Math.abs(b.changePercent) - Math.abs(a.changePercent));
+
+    // Save current rates for next comparison
+    localStorage.setItem(NOTIFICATION_CACHE_KEY, JSON.stringify(currentRates));
+
+    return notifications;
+  } catch (error) {
+    console.error("Error fetching notification data:", error);
+    return [];
+  }
+}
+
+function formatNotifRate(rate, pairName) {
+  if (pairName.includes("JPY")) return rate.toFixed(3);
+  return rate.toFixed(5);
+}
+
+function renderNotifications(notifications) {
+  const feed = document.getElementById("notificationFeed");
+  const badge = document.getElementById("alertCount");
+
+  if (!feed) return;
+
+  if (notifications.length === 0) {
+    feed.innerHTML = '<div class="notification-loading">No alerts available</div>';
+    badge.textContent = "0";
+    return;
+  }
+
+  const movers = notifications.filter((n) => Math.abs(n.changePercent) > 0.001);
+  badge.textContent = movers.length.toString();
+
+  const html = notifications
+    .map((n) => {
+      const dirClass = n.direction;
+      const arrow = n.direction === "up" ? "&#9650;" : n.direction === "down" ? "&#9660;" : "&#9654;";
+      const sign = n.changePercent >= 0 ? "+" : "";
+
+      return `
+      <a href="markets.php" class="notification-item ${dirClass}">
+        <div class="notification-icon">
+          <span class="trend-arrow ${dirClass}">${arrow}</span>
+        </div>
+        <div class="notification-body">
+          <div class="notification-pair">${n.name}</div>
+          <div class="notification-change ${dirClass}">${sign}${n.changePercent.toFixed(2)}%</div>
+        </div>
+        <div class="notification-rate">${formatNotifRate(n.rate, n.name)}</div>
+      </a>
+    `;
+    })
+    .join("");
+
+  feed.innerHTML = html;
+}
+
+// Mobile sidebar toggle
+function setupSidebarToggle() {
+  const toggleBtn = document.getElementById("sidebarToggleBtn");
+  const sidebar = document.getElementById("notificationSidebar");
+
+  if (toggleBtn && sidebar) {
+    toggleBtn.addEventListener("click", () => {
+      sidebar.classList.toggle("mobile-open");
+      const isOpen = sidebar.classList.contains("mobile-open");
+      toggleBtn.innerHTML = isOpen ? "&#10005;" : "&#128276;";
+    });
+
+    document.addEventListener("click", (e) => {
+      if (
+        sidebar.classList.contains("mobile-open") &&
+        !sidebar.contains(e.target) &&
+        !toggleBtn.contains(e.target)
+      ) {
+        sidebar.classList.remove("mobile-open");
+        toggleBtn.innerHTML = "&#128276;";
+      }
+    });
+  }
+}
+
+// Initialize notifications
+async function initNotificationSidebar() {
+  try {
+    const notifications = await fetchNotificationData();
+    renderNotifications(notifications);
+  } catch (error) {
+    console.error("Error initializing notification sidebar:", error);
+  }
+}
+
+window.addEventListener("load", () => {
+  initNotificationSidebar();
+  setupSidebarToggle();
 });
