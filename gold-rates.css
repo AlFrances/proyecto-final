@@ -1,0 +1,188 @@
+/* ===== GOLD RATES PAGE STYLES ===== */
+
+.gold-container {
+  max-width: 1200px;
+  margin: 0 auto 2rem auto;
+}
+
+/* Gold Selector */
+.gold-selector {
+  margin-bottom: 1.5rem;
+}
+
+.gold-selector label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 0.5rem;
+}
+
+.gold-input-group {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.gold-input-group input,
+.gold-input-group select {
+  padding: 0.85rem 1rem;
+  border: none;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.95);
+  font-size: 1rem;
+  color: var(--text-dark);
+  font-family: "Poppins", sans-serif;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.gold-input-group input {
+  flex: 1;
+}
+
+.gold-input-group select {
+  cursor: pointer;
+  min-width: 140px;
+}
+
+/* Refresh Gold Button */
+.refresh-gold-btn {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%);
+  color: #2c2c2c;
+  border: none;
+  border-radius: 12px;
+  font-family: "Poppins", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.refresh-gold-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(212, 175, 55, 0.4);
+}
+
+.refresh-gold-btn svg {
+  transition: transform 0.5s ease;
+}
+
+.refresh-gold-btn:hover svg {
+  transform: rotate(180deg);
+}
+
+/* Gold Table */
+.gold-table-wrapper {
+  overflow-x: auto;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  background: white;
+  border: 1px solid #e8e8e8;
+  margin-bottom: 1rem;
+}
+
+.gold-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  font-size: 0.95rem;
+}
+
+.gold-table thead {
+  background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%);
+}
+
+.gold-table th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: #2c2c2c;
+  border-bottom: 2px solid #c9a832;
+}
+
+.gold-table tbody tr {
+  border-bottom: 1px solid #f0f0f0;
+  transition: background 0.2s ease;
+}
+
+.gold-table tbody tr:hover {
+  background: #fffbf0;
+}
+
+.gold-table td {
+  padding: 0.85rem 1rem;
+  color: var(--text-dark);
+}
+
+.currency-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+}
+
+.flag-icon-small {
+  width: 24px;
+  height: 17px;
+  object-fit: cover;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.price-cell {
+  color: #2c2c2c;
+}
+
+.amount-cell {
+  color: #d4af37;
+  font-weight: 700;
+}
+
+.gold-info {
+  text-align: center;
+  padding: 0.5rem;
+}
+
+.gold-info small {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.85rem;
+}
+
+/* ===== GOLD RATES RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .gold-table {
+    font-size: 0.9rem;
+  }
+  .gold-table th,
+  .gold-table td {
+    padding: 0.75rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .gold-input-group {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .gold-input-group select {
+    width: 100%;
+  }
+  .gold-table {
+    font-size: 0.85rem;
+  }
+  .gold-table th,
+  .gold-table td {
+    padding: 0.65rem 0.5rem;
+  }
+  .flag-icon-small {
+    width: 20px;
+    height: 14px;
+  }
+}

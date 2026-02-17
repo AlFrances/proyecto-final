@@ -1,0 +1,449 @@
+/* ===== SHARED STYLES - Used across all pages ===== */
+
+:root {
+  --primary: #1e3c72;
+  --secondary: #2a5298;
+  --accent: #0052cc;
+  --surface: rgba(255, 255, 255, 0.95);
+  --text: #ffffff;
+  --text-dark: #2c2c2c;
+  --border: rgba(255, 255, 255, 0.2);
+  --gradient-bg: linear-gradient(
+    135deg,
+    rgba(162, 192, 235, 0.95) 0%,
+    rgba(188, 210, 244, 0.95) 100%
+  );
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 0.75rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-xxl: 2.5rem;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scroll-padding-top: 80px;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(
+    135deg,
+    #0a1929 0%,
+    #1e3c72 30%,
+    #2a5298 70%,
+    #1e3c72 100%
+  );
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: scroll-position;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ===== HEADER ===== */
+.site-header {
+  background: rgba(30, 60, 114, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.site-header .brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.site-header .brand-logo {
+  width: 40px;
+  height: 40px;
+  background: var(--surface);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.site-header .brand-name {
+  font-size: 1.5rem;
+  color: var(--text);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.nav-link {
+  padding: 0.65rem 1.25rem;
+  background: transparent;
+  color: var(--text);
+  border: 2px solid transparent;
+  border-radius: 8px;
+  font-family: "Poppins", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.nav-link:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--text);
+}
+
+.nav-link.active {
+  background: var(--text);
+  color: var(--primary);
+  border-color: var(--text);
+}
+
+/* ===== USER SECTION ===== */
+.user-section {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4a90e2 0%, #0052cc 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text);
+  font-weight: 600;
+  font-size: 1rem;
+  text-transform: uppercase;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.user-name {
+  font-weight: 600;
+  color: var(--text);
+  font-size: 0.95rem;
+}
+
+.logout-btn {
+  padding: 0.65rem 1.5rem;
+  background: transparent;
+  color: var(--text);
+  border: 2px solid var(--text);
+  border-radius: 8px;
+  font-family: "Poppins", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.logout-btn:hover {
+  background: var(--text);
+  color: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+}
+
+/* ===== LAYOUT ===== */
+.main-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 2rem 2rem;
+  -webkit-overflow-scrolling: touch;
+  transform: translateZ(0);
+  contain: layout style paint;
+}
+
+/* ===== SHARED CONTAINERS ===== */
+.container,
+.gold-container,
+.result,
+.graph-section,
+.competitor-section {
+  background: var(--gradient-bg);
+  border-radius: 20px;
+  padding: 2.5rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  width: 100%;
+  height: 100%;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+.container,
+.gold-container {
+  max-width: 100%;
+}
+
+/* ===== HEADER SECTION (Page Titles) ===== */
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.header p {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.95rem;
+}
+
+.accent-line {
+  width: 60px;
+  height: 3px;
+  background: var(--text);
+  margin: 1rem auto 0;
+  border-radius: 2px;
+}
+
+/* ===== SHARED UTILITY CLASSES ===== */
+.loading-cell,
+.error-cell {
+  text-align: center;
+  padding: 2rem;
+  color: #6b6b6b;
+  font-style: italic;
+  background: white;
+}
+
+.error-cell {
+  color: #d32f2f;
+  font-weight: 600;
+}
+
+.loading-text {
+  text-align: center;
+  padding: 2rem;
+  color: #8b92a8;
+  font-size: 0.85rem;
+}
+
+/* ===== ACCESSIBILITY ===== */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 3px solid rgba(0, 82, 204, 0.5);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ===== SCROLLBAR ===== */
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: rgba(79, 195, 247, 0.5);
+  border-radius: 5px;
+  transition: background 0.3s ease;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: rgba(79, 195, 247, 0.8);
+}
+
+/* ===== SHARED RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .main-content {
+    padding: 1.5rem;
+  }
+  .container,
+  .gold-container,
+  .result,
+  .graph-section,
+  .competitor-section {
+    padding: 2rem;
+  }
+  body {
+    font-size: 14px;
+  }
+  .site-header {
+    padding: 1rem 1.5rem;
+    flex-wrap: wrap;
+  }
+  .site-header .brand-name {
+    font-size: 1.3rem;
+  }
+  .header-nav {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    margin-top: 0.75rem;
+  }
+  .nav-link {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+  }
+  .user-name {
+    display: none;
+  }
+  .logout-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+  }
+  .header h1 {
+    font-size: 1.75rem;
+  }
+}
+
+@media (max-width: 667px) and (orientation: landscape) {
+  .site-header {
+    padding: 0.75rem 1rem;
+  }
+  .main-content {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .site-header {
+    padding: 1rem;
+    flex-direction: column;
+    gap: 0.75rem;
+    position: relative;
+  }
+  .site-header .brand {
+    justify-content: center;
+  }
+  .header-nav {
+    width: 100%;
+    justify-content: center;
+    margin-top: 0;
+    gap: 0.5rem;
+  }
+  .nav-link {
+    padding: 0.5rem 0.9rem;
+    font-size: 0.8rem;
+  }
+  .user-section {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .main-content {
+    padding: 1rem;
+  }
+  .header h1 {
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+  }
+  .header p {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 375px) {
+  .site-header .brand-logo {
+    width: 35px;
+    height: 35px;
+    font-size: 1rem;
+  }
+  .site-header .brand-name {
+    font-size: 1.2rem;
+  }
+  .user-avatar {
+    width: 35px;
+    height: 35px;
+    font-size: 0.9rem;
+  }
+  .logout-btn {
+    padding: 0.5rem 0.9rem;
+    font-size: 0.8rem;
+  }
+}
+
+@media print {
+  .site-header,
+  .logout-btn,
+  .notification-sidebar,
+  .sidebar-toggle-btn {
+    display: none;
+  }
+  body {
+    background: white;
+  }
+}
