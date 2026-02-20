@@ -29,75 +29,104 @@ const currencies = [
 ];
 
 // Custom Dropdown Functionality
-function initCustomSelect(
-  triggerId,
-  dropdownId,
-  listId,
-  searchId,
-  hiddenInputId,
-) {
+// Portal pattern: dropdown is appended to <body> so it escapes all
+// stacking contexts created by backdrop-filter/transform on parent cards.
+function initCustomSelect(triggerId, dropdownId, listId, searchId, hiddenInputId) {
   const trigger = document.getElementById(triggerId);
+  const dropdown = document.getElementById(dropdownId);
   const list = document.getElementById(listId);
   const search = document.getElementById(searchId);
   const hiddenInput = document.getElementById(hiddenInputId);
   const wrapper = trigger.closest(".custom-select-wrapper");
 
+  // Move dropdown out of the card and into <body>
+  document.body.appendChild(dropdown);
+  dropdown.style.position = "absolute";
+  dropdown.style.zIndex = "99999";
+  dropdown.style.display = "none";
+  dropdown.style.margin = "0";
+
+  const positionDropdown = () => {
+    const rect = trigger.getBoundingClientRect();
+    dropdown.style.top  = (rect.bottom + window.scrollY + 8) + "px";
+    dropdown.style.left = (rect.left   + window.scrollX) + "px";
+    dropdown.style.width = rect.width + "px";
+  };
+
+  const closeAll = () => {
+    document.querySelectorAll(".custom-select-wrapper.active")
+      .forEach(w => w.classList.remove("active"));
+    document.querySelectorAll(".custom-select-dropdown")
+      .forEach(d => { d.style.display = "none"; });
+  };
+
   const populateList = (filterText = "") => {
     list.innerHTML = "";
     if (!filterText) {
-      list.innerHTML += '<div class="currency-label">All currencies</div>';
+      list.innerHTML = '<div class="currency-label">All currencies</div>';
     }
-
     currencies
-      .filter(
-        (c) =>
-          c.code.toLowerCase().includes(filterText.toLowerCase()) ||
-          c.name.toLowerCase().includes(filterText.toLowerCase()),
+      .filter(c =>
+        c.code.toLowerCase().includes(filterText.toLowerCase()) ||
+        c.name.toLowerCase().includes(filterText.toLowerCase())
       )
-      .forEach((currency) => {
+      .forEach(currency => {
         const item = document.createElement("div");
-        item.className = `currency-item ${currency.code === hiddenInput.value ? "selected" : ""}`;
+        item.className = "currency-item" + (currency.code === hiddenInput.value ? " selected" : "");
         item.innerHTML = `
-                        <img src="https://flagcdn.com/w40/${currency.flag}.png" alt="${currency.flag}" class="flag-icon">
-                        <span class="currency-code">${currency.code}</span>
-                        <span class="currency-name">${currency.name}</span>
-                    `;
-        item.onclick = () => {
+          <img src="https://flagcdn.com/w40/${currency.flag}.png" alt="${currency.flag}" class="flag-icon">
+          <span class="currency-code">${currency.code}</span>
+          <span class="currency-name">${currency.name}</span>`;
+        item.addEventListener("click", () => {
           hiddenInput.value = currency.code;
-          trigger.querySelector(".flag-icon").src =
-            `https://flagcdn.com/w40/${currency.flag}.png`;
+          trigger.querySelector(".flag-icon").src = `https://flagcdn.com/w40/${currency.flag}.png`;
           trigger.querySelector(".currency-code").textContent = currency.code;
           trigger.querySelector(".currency-name").textContent = currency.name;
           wrapper.classList.remove("active");
+          dropdown.style.display = "none";
           search.value = "";
           populateList();
           if (hiddenInputId === "fromCurrency") {
-            updateHistoricalChart(
-              currency.code,
-              document.getElementById("toCurrency").value,
-            );
-            updateCompetitorRates(
-              currency.code,
-              document.getElementById("toCurrency").value,
-            );
+            updateHistoricalChart(currency.code, document.getElementById("toCurrency").value);
+            updateCompetitorRates(currency.code, document.getElementById("toCurrency").value);
           }
-        };
+        });
         list.appendChild(item);
       });
   };
 
-  trigger.onclick = (e) => {
+  trigger.addEventListener("click", e => {
     e.stopPropagation();
-    wrapper.classList.toggle("active");
     if (wrapper.classList.contains("active")) {
+      wrapper.classList.remove("active");
+      dropdown.style.display = "none";
+    } else {
+      closeAll();
+      wrapper.classList.add("active");
+      positionDropdown();
+      dropdown.style.display = "block";
       search.focus();
       populateList();
     }
-  };
+  });
 
-  search.oninput = (e) => populateList(e.target.value);
-  document.onclick = () => wrapper.classList.remove("active");
-  document.getElementById(dropdownId).onclick = (e) => e.stopPropagation();
+  search.addEventListener("input", e => populateList(e.target.value));
+  dropdown.addEventListener("click", e => e.stopPropagation());
+
+  // Close on outside click
+  document.addEventListener("click", () => {
+    wrapper.classList.remove("active");
+    dropdown.style.display = "none";
+  });
+
+  // Reposition when page scrolls or resizes
+  window.addEventListener("scroll", () => {
+    if (wrapper.classList.contains("active")) positionDropdown();
+  }, true);
+  window.addEventListener("resize", () => {
+    if (wrapper.classList.contains("active")) positionDropdown();
+  });
+
   populateList();
 }
 
