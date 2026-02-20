@@ -23,7 +23,7 @@ include 'connect.php';
     <!-- Header -->
     <header class="site-header">
         <div class="brand">
-            <div class="brand-logo">₵</div>
+            <div class="brand-logo"><img src="download.png" alt="Logo"></div>
             <div class="brand-name">CurConv</div>
         </div>
         <nav class="header-nav">
