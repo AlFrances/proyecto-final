@@ -46,10 +46,24 @@ function initCustomSelect(triggerId, dropdownId, listId, searchId, hiddenInputId
   dropdown.style.display = "none";
   dropdown.style.margin = "0";
 
+  const DROPDOWN_MAX_HEIGHT = 380; // search bar ~50px + label ~30px + list 320px - max expected
+
   const positionDropdown = () => {
     const rect = trigger.getBoundingClientRect();
-    dropdown.style.top  = (rect.bottom + window.scrollY + 8) + "px";
-    dropdown.style.left = (rect.left   + window.scrollX) + "px";
+    const spaceBelow = window.innerHeight - rect.bottom - 16;
+    const spaceAbove = rect.top - 16;
+
+    let top;
+    if (spaceBelow >= DROPDOWN_MAX_HEIGHT || spaceBelow >= spaceAbove) {
+      // Enough room below — open downward
+      top = rect.bottom + window.scrollY + 8;
+    } else {
+      // Not enough room below — flip upward
+      top = rect.top + window.scrollY - DROPDOWN_MAX_HEIGHT - 8;
+    }
+
+    dropdown.style.top   = top + "px";
+    dropdown.style.left  = (rect.left + window.scrollX) + "px";
     dropdown.style.width = rect.width + "px";
   };
 
