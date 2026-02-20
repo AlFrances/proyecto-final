@@ -30,6 +30,15 @@
   min-width: 0;
   display: flex;
   flex-direction: column;
+  position: relative;
+}
+
+/* Converter card must stack above result panel so dropdowns render on top */
+.converter-result-grid > .container {
+  z-index: 2;
+}
+.converter-result-grid > .result {
+  z-index: 1;
 }
 
 /* ===== FORMS ===== */
