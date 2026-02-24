@@ -916,6 +916,10 @@ select option {
     padding: 0.75rem;
     font-size: 0.95rem;
   }
+  /* Hide name in trigger at mobile — flag + code is enough */
+  .custom-select-trigger .currency-name {
+    display: none;
+  }
   .convert-btn {
     padding: 0.9rem;
     font-size: 0.95rem;
@@ -964,6 +968,17 @@ select option {
   .currency-row {
     flex-direction: column;
     gap: 0.75rem;
+  }
+  /* At 600px column layout, show the currency name again (full width) */
+  .custom-select-trigger .currency-name {
+    display: block;
+  }
+  .header h1 {
+    font-size: 1.4rem;
+    letter-spacing: 0.5px;
+  }
+  .header p {
+    font-size: 0.8rem;
   }
   .container {
     padding: 1.5rem;
@@ -1031,8 +1046,12 @@ select option {
     font-size: 0.9rem;
     min-width: 40px;
   }
-  .currency-name {
-    font-size: 0.85rem;
+  /* Trigger shows flag + code only — name hidden to prevent wrapping */
+  .custom-select-trigger .currency-name {
+    display: none;
+  }
+  .currency-row .input-group:first-child {
+    flex: 0 0 80px;
   }
   .convert-btn {
     padding: 0.8rem;
