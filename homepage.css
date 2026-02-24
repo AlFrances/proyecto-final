@@ -827,19 +827,35 @@ select option {
   font-size: 1.2rem;
 }
 
-/* ===== HOMEPAGE RESPONSIVE ===== */
-@media (min-width: 1400px) {
-  .container {
-    max-width: 600px;
-  }
-  .graph-section {
-    max-width: 1000px;
-  }
-  .competitor-section {
-    max-width: 1200px;
-  }
+/* ===== FLUID SCALING (applied at all sizes via clamp) ===== */
+.header h1 {
+  font-size: clamp(1.1rem, 4vw, 2rem);
+  letter-spacing: clamp(0px, 0.2vw, 2px);
 }
 
+.header p {
+  font-size: clamp(0.75rem, 2vw, 0.95rem);
+}
+
+.result-value {
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+.graph-title,
+.competitor-title {
+  font-size: clamp(1rem, 2.5vw, 1.4rem);
+}
+
+/* ===== HOMEPAGE RESPONSIVE ===== */
+
+/* Large desktop */
+@media (min-width: 1400px) {
+  .container    { max-width: 600px; }
+  .graph-section { max-width: 1000px; }
+  .competitor-section { max-width: 1200px; }
+}
+
+/* Laptop — sidebar narrows, hide currency name (columns get tight) */
 @media (max-width: 1024px) {
   .converter-result-grid {
     max-width: 95%;
@@ -848,9 +864,12 @@ select option {
   .notification-sidebar {
     width: 280px;
   }
+  .custom-select-trigger .currency-name {
+    display: none;
+  }
 }
 
-/* Mid-size window: sidebar eats too much space — hide it, stack the grid */
+/* Mid-size window — sidebar hides, grid stacks to 1 column */
 @media (max-width: 900px) {
   .notification-sidebar {
     display: none;
@@ -862,40 +881,20 @@ select option {
     z-index: 1000;
     box-shadow: -4px 0 20px rgba(0, 0, 0, 0.5);
   }
-  .notification-sidebar.mobile-open {
-    display: flex;
-  }
-  .sidebar-toggle-btn {
-    display: flex;
-  }
+  .notification-sidebar.mobile-open { display: flex; }
+  .sidebar-toggle-btn { display: flex; }
+
   .converter-result-grid {
     grid-template-columns: 1fr;
     max-width: 560px;
     gap: 1rem;
   }
-  .header h1 {
-    font-size: 1.4rem;
-    letter-spacing: 0.5px;
-  }
-  .header p {
-    font-size: 0.8rem;
-  }
-  .header {
-    margin-bottom: 1.25rem;
-  }
-  /* Hide name in trigger — flag + code only at this width */
-  .custom-select-trigger .currency-name {
-    display: none;
-  }
-  .currency-row {
-    gap: 0.75rem;
-  }
 }
 
+/* Tablet */
 @media (max-width: 768px) {
-  .page-layout {
-    flex-direction: column;
-  }
+  .page-layout { flex-direction: column; }
+
   .notification-sidebar {
     display: none;
     position: fixed;
@@ -906,187 +905,110 @@ select option {
     z-index: 1000;
     box-shadow: -4px 0 20px rgba(0, 0, 0, 0.5);
   }
-  .notification-sidebar.mobile-open {
-    display: flex;
-  }
-  .sidebar-toggle-btn {
-    display: flex;
-  }
-  .graph-section,
-  .competitor-section {
-    width: 95%;
-  }
-  .container {
-    padding: 1.75rem;
-  }
+  .notification-sidebar.mobile-open { display: flex; }
+  .sidebar-toggle-btn { display: flex; }
+
+  .container { padding: 1.75rem; }
+
   .input-group input,
   .input-group select,
   .custom-select-trigger {
     padding: 0.75rem;
-    font-size: 0.95rem;
   }
-  /* Hide name in trigger at mobile — flag + code is enough */
-  .custom-select-trigger .currency-name {
-    display: none;
-  }
-  .convert-btn {
-    padding: 0.9rem;
-    font-size: 0.95rem;
-  }
-  .result-value {
-    font-size: 2rem;
-  }
-  .graph-canvas-container {
-    height: 350px;
-  }
-  .comparison-table-wrapper {
-    -webkit-overflow-scrolling: touch;
-  }
-  .comparison-table {
-    min-width: 600px;
-  }
+
+  .convert-btn { padding: 0.9rem; }
+
+  .graph-canvas-container { height: 350px; }
+  .graph-section,
+  .competitor-section { width: 95%; }
+
+  .comparison-table-wrapper { -webkit-overflow-scrolling: touch; }
+  .comparison-table { min-width: 600px; }
   .comparison-table th,
-  .comparison-table td {
-    padding: 0.75rem 0.5rem;
-    font-size: 0.85rem;
-  }
-  .provider-logo {
-    width: 40px;
-    height: 40px;
-    font-size: 1.5rem;
-  }
-  .provider-name {
-    font-size: 0.85rem;
-  }
+  .comparison-table td { padding: 0.75rem 0.5rem; font-size: 0.85rem; }
+  .provider-logo { width: 40px; height: 40px; font-size: 1.5rem; }
+  .provider-name { font-size: 0.85rem; }
 }
 
+/* Landscape phone */
 @media (max-width: 667px) and (orientation: landscape) {
-  .graph-canvas-container {
-    height: 250px;
-  }
+  .graph-canvas-container { height: 250px; }
 }
 
+/* Mobile — stack currency row vertically, restore name in full-width trigger */
 @media (max-width: 600px) {
-  .notification-sidebar {
-    width: 100%;
-  }
+  .notification-sidebar { width: 100%; }
+
   .converter-result-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
+
+  /* Amount + selector stack vertically */
   .currency-row {
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0.5rem;
   }
-  /* At 600px column layout, show the currency name again (full width) */
+
+  /* Reset fixed width — in column layout both go full width */
+  .currency-row .input-group:first-child {
+    flex: none;
+    width: 100%;
+  }
+  .currency-row .input-group:last-child {
+    flex: none;
+    width: 100%;
+  }
+
+  /* Full-width selector has room for the name */
   .custom-select-trigger .currency-name {
     display: block;
   }
-  .header h1 {
-    font-size: 1.4rem;
-    letter-spacing: 0.5px;
-  }
-  .header p {
-    font-size: 0.8rem;
-  }
-  .container {
-    padding: 1.5rem;
-    border-radius: 16px;
-  }
-  .swap-container {
-    margin: 0.75rem 0;
-  }
-  .swap-btn {
-    width: 42px;
-    height: 42px;
-  }
-  .convert-btn {
-    margin-top: 0.75rem;
-  }
-  .result {
-    padding: 1.5rem;
-    border-radius: 16px;
-  }
+
+  .container { padding: 1.5rem; border-radius: 16px; }
+  .swap-container { margin: 0.5rem 0; }
+  .swap-btn { width: 42px; height: 42px; }
+  .convert-btn { margin-top: 0.5rem; }
+
+  .result { padding: 1.5rem; border-radius: 16px; }
+
   .graph-section,
   .competitor-section {
     width: 100%;
     padding: 1.5rem;
     border-radius: 16px;
-    margin: 1.5rem auto;
+    margin: 1.5rem auto !important;
   }
-  .result-value {
-    font-size: 1.75rem;
-  }
-  .graph-canvas-container {
-    height: 300px;
-    padding: 0.75rem;
-  }
-  .graph-title,
-  .competitor-title {
-    font-size: 1.1rem;
-    margin-bottom: 1rem;
-  }
-  .comparison-table {
-    min-width: 550px;
-    font-size: 0.8rem;
-  }
-  .comparison-table th:first-child {
-    width: 140px;
-  }
+
+  .graph-canvas-container { height: 300px; padding: 0.75rem; }
+
+  .comparison-table { min-width: 550px; font-size: 0.8rem; }
+  .comparison-table th:first-child { width: 140px; }
   .comparison-table th,
-  .comparison-table td {
-    padding: 0.6rem 0.4rem;
-  }
+  .comparison-table td { padding: 0.6rem 0.4rem; }
 }
 
+/* Small phone (375px) */
 @media (max-width: 375px) {
-  .container {
-    padding: 1.25rem;
-  }
-  .input-group label {
-    font-size: 0.8rem;
-  }
+  .container { padding: 1.25rem; }
+  .input-group label { font-size: 0.8rem; }
+
   .input-group input,
-  .custom-select-trigger {
-    padding: 0.65rem;
-    font-size: 0.9rem;
-  }
-  .currency-code {
-    font-size: 0.9rem;
-    min-width: 40px;
-  }
-  /* Trigger shows flag + code only — name hidden to prevent wrapping */
-  .custom-select-trigger .currency-name {
-    display: none;
-  }
-  .currency-row .input-group:first-child {
-    flex: 0 0 80px;
-  }
-  .convert-btn {
-    padding: 0.8rem;
-    font-size: 0.9rem;
-  }
-  .result-value {
-    font-size: 1.5rem;
-  }
-  .result-details {
-    font-size: 0.85rem;
-  }
-  .comparison-table {
-    min-width: 500px;
-  }
+  .custom-select-trigger { padding: 0.65rem; }
+
+  .currency-code { min-width: 40px; }
+
+  /* Very tight — hide name even in stacked layout */
+  .custom-select-trigger .currency-name { display: none; }
+
+  .convert-btn { padding: 0.8rem; }
+  .result-details { font-size: 0.85rem; }
+  .comparison-table { min-width: 500px; }
 }
 
 @media print {
-  .swap-btn,
-  .convert-btn,
-  .reset-btn {
-    display: none;
-  }
-  .container,
-  .result,
-  .graph-section,
-  .competitor-section {
+  .swap-btn, .convert-btn, .reset-btn { display: none; }
+  .container, .result, .graph-section, .competitor-section {
     box-shadow: none;
     border: 1px solid #ddd;
     page-break-inside: avoid;
