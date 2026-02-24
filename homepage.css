@@ -52,6 +52,15 @@
   margin-bottom: 1rem;
 }
 
+/* Amount gets fixed narrow width; From/To selector gets the rest */
+.currency-row .input-group:first-child {
+  flex: 0 0 100px;
+}
+
+.currency-row .input-group:last-child {
+  flex: 1;
+}
+
 .input-group {
   flex: 1;
   position: relative;
@@ -152,6 +161,9 @@ select option {
   flex: 1;
   color: #6b6b6b;
   font-size: 0.9rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .dropdown-arrow {
