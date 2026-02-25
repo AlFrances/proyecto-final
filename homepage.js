@@ -1,5 +1,5 @@
 // API Configuration
-const API_KEY = "35ac3323f08c75b689ea532f";
+const API_KEY = "1e7bed46857db1854e506c15";
 const API_URL = `https://v6.exchangerate-api.com/v6/${API_KEY}/latest/`;
 
 // Currency Data

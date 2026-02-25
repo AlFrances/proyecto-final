@@ -1,10 +1,9 @@
 // API Configuration
-const API_KEY = "35ac3323f08c75b689ea532f";
+const API_KEY = "1e7bed46857db1854e506c15";
 const API_URL = `https://v6.exchangerate-api.com/v6/${API_KEY}/latest/`;
 
-// Gold API Configuration
-const GOLD_API_KEY = "goldapi-109yk2v19ml0v7geu-io";
-const GOLD_API_URL = "https://www.goldapi.io/api";
+// Gold API proxied through server to avoid CORS and hide API key
+const GOLD_API_URL = "gold-proxy.php";
 
 // Currency Data (needed for flag display)
 const currencies = [
@@ -39,17 +38,12 @@ function handleLogout() {
   }
 }
 
-// Exchange Rate API (needed for currency conversion in gold prices)
-async function getExchangeRate(from, to) {
-  try {
-    const response = await fetch(API_URL + from);
-    const data = await response.json();
-    if (data.result === "success") return data.conversion_rates[to];
-    throw new Error("API request failed");
-  } catch (error) {
-    console.error("Error fetching exchange rate:", error);
-    throw error;
-  }
+// Exchange Rate API — fetch all rates in one call
+async function getAllExchangeRates(base) {
+  const response = await fetch(API_URL + base);
+  const data = await response.json();
+  if (data.result === "success") return data.conversion_rates;
+  throw new Error("Exchange rate API failed: " + (data["error-type"] || "unknown"));
 }
 
 // Gold Price Functions
@@ -58,13 +52,7 @@ let goldLastUpdate = null;
 
 async function fetchGoldPrices() {
   try {
-    const response = await fetch(`${GOLD_API_URL}/XAU/USD`, {
-      method: "GET",
-      headers: {
-        "x-access-token": GOLD_API_KEY,
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch(GOLD_API_URL);
 
     if (!response.ok) throw new Error("Gold API request failed");
 
@@ -112,42 +100,27 @@ async function updateGoldTable() {
     ];
     const pricePerOzUSD = goldData.price_gram_24k * 31.1035;
 
-    const rows = await Promise.all(
-      targetCurrencies.map(async (currency) => {
-        try {
-          let priceInCurrency, yourAmount;
+    // Fetch all rates in a single API call
+    const allRates = await getAllExchangeRates("USD");
 
-          if (currency === "USD") {
-            priceInCurrency = pricePerOzUSD;
-            yourAmount = pricePerOzUSD * weightInOz;
-          } else {
-            const rate = await getExchangeRate("USD", currency);
-            priceInCurrency = pricePerOzUSD * rate;
-            yourAmount = priceInCurrency * weightInOz;
-          }
-
-          const currencyInfo = currencies.find((c) => c.code === currency);
-          const flagImg = currencyInfo
-            ? `<img src="https://flagcdn.com/w40/${currencyInfo.flag}.png" class="flag-icon-small" alt="${currency}">`
-            : "";
-
-          return `
-                        <tr>
-                            <td class="currency-cell">${flagImg} <strong>${currency}</strong></td>
-                            <td class="price-cell">${priceInCurrency.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                            <td class="amount-cell"><strong>${yourAmount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong></td>
-                        </tr>
-                    `;
-        } catch (err) {
-          return `
-                        <tr>
-                            <td>${currency}</td>
-                            <td colspan="2" class="error-cell">Error loading</td>
-                        </tr>
-                    `;
-        }
-      }),
-    );
+    const rows = targetCurrencies.map((currency) => {
+      const rate = currency === "USD" ? 1 : allRates[currency];
+      if (!rate) {
+        return `<tr><td>${currency}</td><td colspan="2" class="error-cell">Rate unavailable</td></tr>`;
+      }
+      const priceInCurrency = pricePerOzUSD * rate;
+      const yourAmount = priceInCurrency * weightInOz;
+      const currencyInfo = currencies.find((c) => c.code === currency);
+      const flagImg = currencyInfo
+        ? `<img src="https://flagcdn.com/w40/${currencyInfo.flag}.png" class="flag-icon-small" alt="${currency}">`
+        : "";
+      return `
+        <tr>
+          <td class="currency-cell">${flagImg} <strong>${currency}</strong></td>
+          <td class="price-cell">${priceInCurrency.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+          <td class="amount-cell"><strong>${yourAmount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong></td>
+        </tr>`;
+    });
 
     tableBody.innerHTML = rows.join("");
     updateTimeEl.textContent = `Last updated: ${goldLastUpdate.toLocaleTimeString()}`;

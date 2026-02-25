@@ -1,5 +1,5 @@
 // API Configuration
-const EXCHANGERATE_API_KEY = "35ac3323f08c75b689ea532f";
+const EXCHANGERATE_API_KEY = "1e7bed46857db1854e506c15";
 const EXCHANGERATE_API_URL = `https://v6.exchangerate-api.com/v6/${EXCHANGERATE_API_KEY}/latest/`;
 
 // Alpha Vantage API for real-time forex data
